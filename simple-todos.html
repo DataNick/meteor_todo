@@ -1,14 +1,23 @@
 <head>
-  <title>simple-todos</title>
+  <title>ToDo List</title>
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
-
-  {{> hello}}
+	<div class="container">
+		<header>
+  		<h1>ToDo List</h1>
+  	</header>
+		
+		<ul>
+			{{#each tasks}}
+  			<!-- // insert task template for each item in the array -->
+        {{> task}} 
+  		{{/each}}
+  	</ul>
+  </div>
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+<template name="task">
+  <li>{{text}}</li>
+  <!-- Display the text property of each array item using {{text}} -->
 </template>
