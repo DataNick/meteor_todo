@@ -5,7 +5,12 @@
 <body>
 	<div class="container">
 		<header>
-  		<h1>ToDo List</h1>
+  		<h1>ToDo List ({{incompleteCount}})</h1>
+
+      <label class="hide-completed">
+        <input type="checkbox" checked="{{hideCompleted}}" />
+        Hide completed tasks
+      </label>
 
       <form class="new-task">
         <input type="text" name="word" placeholder="Type to add new task" />
