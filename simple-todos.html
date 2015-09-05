@@ -6,6 +6,10 @@
 	<div class="container">
 		<header>
   		<h1>ToDo List</h1>
+
+      <form class="new-task">
+        <input type="text" name="word" placeholder="Type to add new task" />
+      </form>
   	</header>
 		
 		<ul>
@@ -19,5 +23,5 @@
 
 <template name="task">
   <li>{{text}}</li>
-  <!-- Display the text property of each array item using {{text}} -->
+<!-- Display the text property of each array item using {{text}} -->
 </template>
