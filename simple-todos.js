@@ -30,12 +30,7 @@ if (Meteor.isClient) {
       var text = event.target.word.value;
 
       // Insert task into the collection
-      Tasks.insert({
-        text: text,
-        createdAt: new Date(), // current time
-        owner: Meteor.userId(),
-        username: Meteor.user().username
-      });
+      Meteor.call("addTask", text);
 
       // Clear form
       event.target.word.value = ""
@@ -48,12 +43,10 @@ if (Meteor.isClient) {
   Template.task.events ({
     "click .toggle-checked": function () {
       // Set the checked property to the opposite of its current value
-      Tasks.update(this._id, {
-        $set: {checked: ! this.checked}
-      });
+      Meteor.call("setChecked", this._id, ! this.checked);
     },
     "click .delete": function () {
-      Tasks.remove(this._id);
+      Meteor.call("deleteTask", this._id);
     }
   });
 
@@ -61,6 +54,27 @@ if (Meteor.isClient) {
     passwordSignupFields: "USERNAME_ONLY"
   });
 }
+
+Meteor.methods ({
+  addTask: function (text) {
+    // Make sure user is logged in before submitting a task
+    if (! Meteor.userId()) {
+      throw new Meteor.Error("not-authorized");
+    }
+    Tasks.insert({
+      text: text,
+      createdAt: new Date(),
+      owner: Meteor.userId(),
+      username: Meteor.user().username
+    });
+  },
+  deleteTask: function (taskId) {
+    Tasks.remove(taskId);
+  },
+  setChecked: function (taskId, setChecked) {
+    Tasks.update(taskId, { $set: { checked: setChecked} }); 
+  }
+});
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
